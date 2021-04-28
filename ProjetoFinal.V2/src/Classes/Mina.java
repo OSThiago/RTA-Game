@@ -118,6 +118,17 @@ public class Mina {
 		return stringLista;
 	}
 	
+	
+	public boolean verificaSeEstaNaMina(int id) {
+		for (Integer idNaLista : idAldeoes) {
+			if(idNaLista == id+1)
+				return true;
+		}
+		return false;
+	}
+	
+	
+	
 	/******************** GET ***********************/
 	
 	public int getQtdAldeoes() {

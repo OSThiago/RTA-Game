@@ -639,10 +639,17 @@ public class Principal extends JFrame {
 			mostrarMensagemErro("Erro", "Escolha um aldeão");
 		else {
 			Aldeao aldeaoSelecionado = this.vila.getAldeao(aldeao);
+			aldeaoSelecionado.trocaFazenda(numeroFazenda);
 			aldeaoSelecionado.setFazenda(this.vila.getFazenda(numeroFazenda));
-			aldeaoSelecionado.getFazenda().adionarNaLista(aldeao);
-			//aldeaoSelecionado.trocar();
-			aldeaoSelecionado.setFuncaoAtual(AcaoAldeao.CULTIVANDO);
+			if(!aldeaoSelecionado.getFazenda().verificaSeEstaNaFazenda(aldeao)) {
+				aldeaoSelecionado.getFazenda().adionarNaLista(aldeao);
+				aldeaoSelecionado.setFuncaoAtual(AcaoAldeao.CULTIVANDO);
+			}else {
+				System.out.println("já esta cultivando nessa fazenda");
+			}
+			
+			
+			
 		}
 			System.out.println("comandoAldeaoCultivar(aldeao, numeroFazenda);");
 	}
@@ -652,10 +659,16 @@ public class Principal extends JFrame {
 			mostrarMensagemErro("Erro", "Escolha um aldeão");
 		else {
 			Aldeao aldeaoSelecionado = this.vila.getAldeao(aldeao);
+			aldeaoSelecionado.trocaMina(numeroMinaOuro);
 			aldeaoSelecionado.setMina(this.vila.getMina(numeroMinaOuro));
-			aldeaoSelecionado.getMina().adionarNaLista(aldeao);
-			//aldeaoSelecionado.trocar();
-			aldeaoSelecionado.setFuncaoAtual(AcaoAldeao.MINERANDO);
+			if(!aldeaoSelecionado.getMina().verificaSeEstaNaMina(aldeao)) {
+				aldeaoSelecionado.getMina().adionarNaLista(aldeao);
+				aldeaoSelecionado.setFuncaoAtual(AcaoAldeao.MINERANDO);
+			}else {
+				System.out.println("já esta minerando nessa Mina");
+			}
+			
+			
 		}
 			System.out.println("comandoAldeaoMinerar(aldeao, numeroMinaOuro);");
 	}

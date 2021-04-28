@@ -129,6 +129,15 @@ public class Fazenda {
 		return stringLista;
 	}
 	
+	public boolean verificaSeEstaNaFazenda(int id) {
+		for (Integer idNaLista : idAldeoes) {
+			if(idNaLista == id+1)
+				return true;
+		}
+		return false;
+	}
+	
+	
 	/******************** GET ***********************/
 	
 	public int getQtdAldeoes() {

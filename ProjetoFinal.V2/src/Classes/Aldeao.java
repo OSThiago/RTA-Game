@@ -70,13 +70,6 @@ public class Aldeao extends Thread{
 		}
 	}
 	
-	/***************************************************************************************************/
-	/***************************************************************************************************/
-	/*-------------------------------------- parei aqui -------------------------------------------------
-	 * *************************/
-	/***************************************************************************************************/
-	/***************************************************************************************************/
-	/***************************************************************************************************/
 	private void parar() {
 		
 		System.out.println(this.numero +" Parado");
@@ -88,21 +81,11 @@ public class Aldeao extends Thread{
 			}
 		}
 	}
-	
-	/*
-	 ******************************   Remover bug de 1 aldeao cultivar/minerar 2 duasfazendas   ****************************************************************
-	 * ****************************   Remover bug de 1 aldeao cultivar/minerar 2 duasfazendas   ****************************************************************
-	 * ****************************   Remover bug de 1 aldeao cultivar/minerar 2 duasfazendas   ****************************************************************
-	 * ****************************   Remover bug de 1 aldeao cultivar/minerar 2 duasfazendas   ****************************************************************
-	 * */
-	
-	
-	
-	
+		
 	private void cultivar() {
 		System.out.println(this.fazenda.getQtdAldeoes());
 		if(this.fazenda.getQtdAldeoes() > 5 * this.fazenda.getNivel()) {
-			//setFuncaoAtual(AcaoAldeao.PARADO);
+			setFuncaoAtual(AcaoAldeao.PARADO);
 		}else {
 			this.fazenda.cultivar(this.nivel);
 			this.fazenda.transportar(this.nivel);
@@ -155,7 +138,7 @@ public class Aldeao extends Thread{
 		System.out.println(this.construcao + " < -----------------------");
 		
 		if(this.construcao == "Fazenda") {
-			if(this.vila.verificaEPaga(100, 100, 0)){ // comida, ouro, oferenda
+			if(this.vila.verificaEPaga(00, 00, 0)){ // comida, ouro, oferenda
 				construirFazenda();	
 			}else {
 				System.out.println("não tem recurso suficente");
@@ -163,8 +146,8 @@ public class Aldeao extends Thread{
 		}
 		
 		if(this.construcao == "Mina de ouro") {
-			if(this.vila.verificaEPaga(1000, 0, 0)){// comida, ouro, oferenda
-				this.vila.getPrefeitura().retirarComida(1000);
+			if(this.vila.verificaEPaga(0, 0, 0)){// comida, ouro, oferenda
+				this.vila.getPrefeitura().retirarComida(0);
 				construirMina();
 			}
 		}
@@ -292,6 +275,27 @@ public class Aldeao extends Thread{
 		
 	}*/
 	
+	
+	public void trocaFazenda(int fazenda) {
+		if(this.fazenda == null) {
+			return;
+		}
+		if(this.fazenda.getIdFazenda() != fazenda) {
+			System.out.println("esta trocando de fazenda");
+			this.fazenda.retirarDaLista(this.numero);
+		}	
+	}
+	
+	public void trocaMina(int mina) {
+		
+		if(this.mina == null) {
+			return;
+		}
+		if(this.mina.getIdMina() != mina) {
+			System.out.println("esta trocando de mina");
+			this.mina.retirarDaLista(this.numero);
+		}
+	}
 	
 	public void setFazenda(Fazenda fazenda) {
 		this.fazenda = fazenda;

@@ -22,7 +22,7 @@ public class Prefeitura{
 	
 	public void criarAldeao() {
 		 
-		if(this.vila.verificaEPaga(100, 0, 0)) {
+		if(this.vila.verificaEPaga(00, 0, 0)) {
 			Aldeao novoAldeao = new Aldeao(this.vila,this.vila.gerarIdAldeao(), this.principal);
 			this.vila.addAldeoes(novoAldeao);
 			novoAldeao.start();
@@ -36,11 +36,7 @@ public class Prefeitura{
 			principal.mostrarAldeao(numero+1, "Sem funcao");
 		}else {
 			System.out.println("Não tem recurso suficiente");
-		}
-		
-		
-		
-		
+		}	
 	}
 	
 	
@@ -87,6 +83,19 @@ public class Prefeitura{
 	
 	/************************* Evoluir *****************************/
 	
+	/****************************************************************/
+	/************************* Trocar os preços *****************************/
+	/************************* Trocar tempo *****************************/
+	/************************* Começar com quantidade x de recursos *****************************/
+	/************************* Evoluções do templo e prefeitura*****************************/
+	/************************* Evoluir proteções *****************************/
+	/************************* Trocar as cores das funções *****************************/
+	
+	
+	
+	
+	
+	
 	public void evoluir(String qual) {
 		
 		if(qual.equals("Evolução de aldeão")) {
@@ -94,10 +103,11 @@ public class Prefeitura{
 			evoluirAldeao();
 		}else if(qual.equals("Evolução de fazenda")) {
 			System.out.println("Evoluir fazenda");
-			
+			evoluirFazenda();
 			
 		}else if(qual.equals("Evolução de mina de ouro")) {
 			System.out.println("Evoluir mina");
+			evoluirMina();
 		}
 	}
 	
