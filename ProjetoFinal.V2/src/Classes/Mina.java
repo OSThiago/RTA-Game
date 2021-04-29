@@ -30,7 +30,7 @@ public class Mina {
 	public void minerar(int nivelAldeao){
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -43,7 +43,7 @@ public class Mina {
 	public void transportar(int nivelAldeao){
 		if(this.ouro >= 5*nivelAldeao) {
 			try {
-				Thread.sleep(2000/nivelAldeao);
+				Thread.sleep(3000/nivelAldeao);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

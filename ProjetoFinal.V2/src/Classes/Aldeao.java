@@ -138,7 +138,7 @@ public class Aldeao extends Thread{
 		System.out.println(this.construcao + " < -----------------------");
 		
 		if(this.construcao == "Fazenda") {
-			if(this.vila.verificaEPaga(00, 00, 0)){ // comida, ouro, oferenda
+			if(this.vila.verificaEPaga(100, 500, 0)){ // comida, ouro, oferenda
 				construirFazenda();	
 			}else {
 				System.out.println("não tem recurso suficente");
@@ -146,14 +146,13 @@ public class Aldeao extends Thread{
 		}
 		
 		if(this.construcao == "Mina de ouro") {
-			if(this.vila.verificaEPaga(0, 0, 0)){// comida, ouro, oferenda
-				this.vila.getPrefeitura().retirarComida(0);
+			if(this.vila.verificaEPaga(1000, 0, 0)){// comida, ouro, oferenda
 				construirMina();
 			}
 		}
 		
 		if(this.construcao == "Templo"){
-			if(this.vila.verificaEPaga(000, 000, 0) && this.vila.getTemplo() == null)
+			if(this.vila.verificaEPaga(2000, 2000, 0) && this.vila.getTemplo() == null)
 			construirTemplo();
 		}
 		
@@ -169,7 +168,7 @@ public class Aldeao extends Thread{
 	
 	private void construirFazenda() {
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(30000);
 			Fazenda fazenda = new Fazenda(this.vila, this.vila.gerarIdFazenda(), this.principal);
 			this.vila.addFazenda(fazenda);
 			this.principal.adicionarFazenda(String.valueOf(this.vila.gerarIdFazenda() ),"");
@@ -182,7 +181,7 @@ public class Aldeao extends Thread{
 	
 	private void construirMina() {
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(40000);
 			Mina mina = new Mina(this.vila, this.vila.gerarIdMina(), this.principal);
 			this.vila.addMina(mina);
 			this.principal.adicionarMinaOuro(String.valueOf(this.vila.gerarIdMina()), "AldeoesA");
@@ -196,7 +195,7 @@ public class Aldeao extends Thread{
 	private void construirTemplo() {
 		try {
 			if(this.vila.getTemplo() == null){
-				Thread.sleep(5000);
+				Thread.sleep(100000);
 				System.out.println("Pode ser habilitado!");
 				Templo templo = new Templo(this.vila, this.principal);
 				this.vila.setTemplo(templo);
@@ -219,7 +218,7 @@ public class Aldeao extends Thread{
 					this.vila.getMaravilha().produzirTijolo();
 				}else {
 					System.out.println("sem recurso suficiente");
-					this.setFuncaoAtual(funcaoAtual.PARADO);
+					setFuncaoAtual(funcaoAtual.PARADO);
 				}
 				
 			}
@@ -239,11 +238,11 @@ public class Aldeao extends Thread{
 	public void setFuncaoAtual(AcaoAldeao acao) {
 		this.funcaoAtual = acao;
 		
-		if(this.fazenda != null && acao != acao.CULTIVANDO) {
+		if(this.fazenda != null && acao != AcaoAldeao.CULTIVANDO) {
 			System.out.println("chegou pra remover");
 			this.fazenda.retirarDaLista(this.numero);
 		}
-		if(this.mina != null && acao != acao.MINERANDO) {
+		if(this.mina != null && acao != AcaoAldeao.MINERANDO) {
 			System.out.println("chegou pra remover");
 			this.mina.retirarDaLista(this.numero);
 		}

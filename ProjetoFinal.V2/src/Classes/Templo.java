@@ -82,11 +82,23 @@ public class Templo extends Thread{
 		if(this.qualEvolucao.equals("Chuva de pedras")){
 			evoluirChuva();
 		}
+		
+		if(this.qualEvolucao.equals("Proteção contra nuvem de gafanhotos")){
+			evoluirProtecaoNuvem();
+		}
+		
+		if(this.qualEvolucao.equals("Proteção contra morte dos primogênitos")){
+			evoluirProtecaoMorte();
+		}
+		
+		if(this.qualEvolucao.equals("Proteção contra chuva de pedras")){
+			evoluirProtecaoChuva();
+		}
 		this.setAcaoTemplo(AcaoTemplo.PARADO);
 	}
 	
 	public void evoluirNuvem(){
-		int precoOferenda = 0;
+		int precoOferenda = 10000;
 		
 		if(!verificaPreco(precoOferenda)) {
 			return;
@@ -98,7 +110,7 @@ public class Templo extends Thread{
 		
 		try {
 			this.vila.getPrefeitura().retirarOferenda(precoOferenda);
-			Thread.sleep(5000);
+			Thread.sleep(50000);
 			this.evolucoes.add("NUVEM_GAFANHOTOS");
 			this.principal.mostrarAtaques(this.evolucoes);
 		} catch (InterruptedException e) {
@@ -107,7 +119,7 @@ public class Templo extends Thread{
 	}
 	
 	public void evoluirMorte(){
-		int precoOferenda = 0;
+		int precoOferenda = 1500;
 		
 		if(!verificaPreco(precoOferenda)) {
 			return;
@@ -119,7 +131,7 @@ public class Templo extends Thread{
 			
 		try {
 			this.vila.getPrefeitura().retirarOferenda(precoOferenda);
-			Thread.sleep(5000);
+			Thread.sleep(100000);
 			this.evolucoes.add("MORTE_PRIMOGENITOS");
 			this.principal.mostrarAtaques(this.evolucoes);
 		} catch (InterruptedException e) {
@@ -128,19 +140,19 @@ public class Templo extends Thread{
 	}
 	
 	public void evoluirChuva(){
-		int precoOferenda = 0;
+		int precoOferenda = 2000;
 		
 		if(!verificaPreco(precoOferenda)) {
 			return;
 		}
 		
-		if(existeEvolucao("NUVEM_GAFANHOTOS")) {
+		if(existeEvolucao("CHUVA_PEDRAS")) {
 			return;
 		}
 		
 		try {
 			this.vila.getPrefeitura().retirarOferenda(precoOferenda);
-			Thread.sleep(5000);
+			Thread.sleep(200000);
 			this.evolucoes.add("CHUVA_PEDRAS");
 			this.principal.mostrarAtaques(this.evolucoes);
 		} catch (InterruptedException e) {
@@ -148,6 +160,68 @@ public class Templo extends Thread{
 		}		
 	}
 	
+	public void evoluirProtecaoNuvem(){
+		int precoOferenda = 5000;
+		
+		if(!verificaPreco(precoOferenda)) {
+			return;
+		}
+		
+		if(existeEvolucao("PROTECAO_NUVEM_GAFANHOTOS")) {
+			return;
+		}
+		
+		try {
+			this.vila.getPrefeitura().retirarOferenda(precoOferenda);
+			Thread.sleep(500000);
+			this.evolucoes.add("PROTECAO_NUVEM_GAFANHOTOS");
+			this.principal.mostrarAtaques(this.evolucoes);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void evoluirProtecaoMorte(){
+		int precoOferenda = 6000;
+		
+		if(!verificaPreco(precoOferenda)) {
+			return;
+		}
+		
+		if(existeEvolucao("PROTECAO_MORTE_PRIMOGENITOS")) {
+			return;
+		}
+		
+		try {
+			this.vila.getPrefeitura().retirarOferenda(precoOferenda);
+			Thread.sleep(600000);
+			this.evolucoes.add("PROTECAO_MORTE_PRIMOGENITOS");
+			this.principal.mostrarAtaques(this.evolucoes);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void evoluirProtecaoChuva(){
+		int precoOferenda = 7000;
+		
+		if(!verificaPreco(precoOferenda)) {
+			return;
+		}
+		
+		if(existeEvolucao("PROTECAO_CHUVA_PEDRAS")) {
+			return;
+		}
+		
+		try {
+			this.vila.getPrefeitura().retirarOferenda(precoOferenda);
+			Thread.sleep(700000);
+			this.evolucoes.add("PROTECAO_CHUVA_PEDRAS");
+			this.principal.mostrarAtaques(this.evolucoes);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private boolean verificaPreco(int preco) {
 		if(this.vila.getPrefeitura().getOferenda() >= preco) {

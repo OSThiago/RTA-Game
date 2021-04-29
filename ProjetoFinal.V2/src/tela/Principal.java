@@ -1,3 +1,5 @@
+//Paulo Henrique Michalski Machado - UC19101231
+//Thiago de Oliveira Sousa - UC19105631
 package tela;
 
 import java.awt.Color;
@@ -490,34 +492,6 @@ public class Principal extends JFrame {
 		});
 
 	}
-
-	//************************************************************************
-	//*** Testar - Depois pode apagar ****************************************
-	//************************************************************************
-	public void testar() {		
-		
-		
-//		this.adicionarAldeao("1", "fazendo nada");
-//		this.mostrarAldeao(1, "continua fazendo nada");
-//		this.adicionarFazenda("1", "aaaa");
-//		this.mostrarFazenda(1, "bbbb");
-//		this.mostrarComida(111);
-//		this.adicionarMinaOuro("1", "cccc");
-//		this.mostrarMinaOuro(1, "dddd");
-//		this.mostrarOuro(222);
-//		this.mostrarOferendaFe(333);
-//		this.mostrarPrefeitura("eeee", Color.ORANGE);
-//		this.habilitarTemplo();
-//		this.habilitarMaravilha();
-//		this.mostrarMaravilha(10000);
-//		List<String> evolucoes = new ArrayList<String>();
-//		evolucoes.add("NUVEM_GAFANHOTOS");
-//		evolucoes.add("MORTE_PRIMOGENITOS");
-//		evolucoes.add("CHUVA_PEDRAS"); 
-//		this.mostrarAtaques(evolucoes);
-//		this.mostrarTemplo("ffff", Color.MAGENTA);
-
-	}
 	//************************************************************************
 	//************************************************************************
 	//************************************************************************
@@ -601,7 +575,10 @@ public class Principal extends JFrame {
 			switch (evolucao) {
 			case "NUVEM_GAFANHOTOS":	this.cbTemploLancamentos.addItem("Nuvem de gafanhotos");	break;
 			case "MORTE_PRIMOGENITOS":	this.cbTemploLancamentos.addItem("Morte dos primogênitos");	break;
-			case "CHUVA_PEDRAS": 		this.cbTemploLancamentos.addItem("Chuva de pedras");
+			case "CHUVA_PEDRAS": 		this.cbTemploLancamentos.addItem("Chuva de pedras");        break;
+			case "PROTECAO_NUVEM_GAFANHOTOS":	this.cbTemploLancamentos.addItem("Proteção contra nuvem de gafanhotos");	break;
+			case "PROTECAO_MORTE_PRIMOGENITOS":	this.cbTemploLancamentos.addItem("Proteção contra morte dos primogênitos");	break;
+			case "PROTECAO_CHUVA_PEDRAS": 		this.cbTemploLancamentos.addItem("Proteção contra chuva de pedras");
 			}
 		}
 	}

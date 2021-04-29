@@ -65,12 +65,11 @@ public class Prefeitura extends Thread{
 	
 	private void criarAldeao() {
 		 
-		if(this.vila.verificaEPaga(00, 0, 0)) {
+		if(this.vila.verificaEPaga(100, 0, 0)) {
 			
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(20000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -135,18 +134,6 @@ public class Prefeitura extends Thread{
 	}
 	
 	/************************* Evoluir *****************************/
-	
-	/****************************************************************/
-	/****************************************************************/
-	/************************* Trocar os preços *****************************/
-	/************************* Trocar tempo *****************************/
-	/****************************************************************/
-	/****************************************************************/
-
-	
-	
-	
-	
 	public void qualEvoluir(String qual) {
 		this.evoluirQual = qual;
 	}
@@ -168,8 +155,8 @@ public class Prefeitura extends Thread{
 	}
 	
 	private void evoluirAldeao() {
-		int precoComida = 0;
-		int precoOuro = 0;
+		int precoComida = 5000;
+		int precoOuro = 5000;
 		int precoOferenda = 0;
 		
 		if(!podePagar(precoComida,precoOuro,precoOferenda)) {
@@ -188,7 +175,7 @@ public class Prefeitura extends Thread{
 		try {
 			retirarComida(precoComida);
 			retirarOuro(precoOuro);
-			Thread.sleep(2000);
+			Thread.sleep(10000);
 			for (Aldeao aldeao : this.vila.getListaAldeos()) {
 				aldeao.evoluir();
 		}
@@ -199,8 +186,8 @@ public class Prefeitura extends Thread{
 	}
 	
 	private void evoluirFazenda() {
-		int precoComida = 0;
-		int precoOuro = 0;
+		int precoComida = 500;
+		int precoOuro = 5000;
 		int precoOferenda = 0;
 		
 		if(!podePagar(precoComida,precoOuro,precoOferenda)) {
@@ -216,7 +203,7 @@ public class Prefeitura extends Thread{
 		try {
 			retirarComida(precoComida);
 			retirarOuro(precoOuro);
-			Thread.sleep(2000);
+			Thread.sleep(100000);
 			for (Fazenda fazenda: this.vila.getListaFazendas()) {
 				if(fazenda.getNivel() == 1) {
 					fazenda.evoluir();
@@ -228,8 +215,8 @@ public class Prefeitura extends Thread{
 	}
 	
 	private void evoluirMina() {
-		int precoComida = 0;
-		int precoOuro = 0;
+		int precoComida = 2000;
+		int precoOuro = 1000;
 		int precoOferenda = 0;
 		
 		if(!podePagar(precoComida,precoOuro,precoOferenda)) {
@@ -245,7 +232,7 @@ public class Prefeitura extends Thread{
 		try {
 			retirarComida(precoComida);
 			retirarOuro(precoOuro);
-			Thread.sleep(2000);
+			Thread.sleep(100000);
 			for (Mina mina: this.vila.getListaMinas()) {
 				if(mina.getNivel() == 1) {
 					mina.evoluir();
