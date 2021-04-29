@@ -39,27 +39,27 @@ public class Aldeao extends Thread{
 				parar();
 				break;
 			case CONSTRUINDO:
-				this.funcao = "Construindo " + this.construcao;
+				this.funcao = "construindo " + this.construcao;
 				this.principal.mostrarAldeao(this.numero+1, this.funcao);
 				construir();
 				break;
 			case CULTIVANDO:
-				this.funcao = "Cultivando...";
+				this.funcao = "cultivando";
 				this.principal.mostrarAldeao(this.numero+1, this.funcao);
 				cultivar();
 				break;
 			case MINERANDO:
-				this.funcao = "Mineirando...";
+				this.funcao = "minerando";
 				this.principal.mostrarAldeao(this.numero+1, this.funcao);
 				minerar();
 				break;
 			case ORANDO:
-				this.funcao = "Orando...";
+				this.funcao = "orando";
 				this.principal.mostrarAldeao(this.numero+1, this.funcao);
 				orar();
 				break;
 			case SACRIFICAR:
-				this.funcao = "||MORTO||";
+				this.funcao = "sacrificado";
 				this.principal.mostrarAldeao(this.numero+1, this.funcao);
 				sacrificar();
 				break;
@@ -153,7 +153,7 @@ public class Aldeao extends Thread{
 		}
 		
 		if(this.construcao == "Templo"){
-			if(this.vila.verificaEPaga(2000, 2000, 0) && this.vila.getTemplo() == null)
+			if(this.vila.verificaEPaga(000, 000, 0) && this.vila.getTemplo() == null)
 			construirTemplo();
 		}
 		
@@ -202,6 +202,7 @@ public class Aldeao extends Thread{
 				this.vila.setTemplo(templo);
 				this.principal.habilitarTemplo();
 				this.principal.mostrarOferendaFe(this.vila.getPrefeitura().getOferenda());
+				templo.start();
 				System.out.println("construindo templo...");
 			}else{
 				System.out.println("O templo já está habilitado!");

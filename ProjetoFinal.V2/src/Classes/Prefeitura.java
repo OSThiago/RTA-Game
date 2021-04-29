@@ -2,31 +2,83 @@ package Classes;
 
 import tela.Principal;
 
-public class Prefeitura{
+public class Prefeitura extends Thread{
 	//Atributos
 	private Principal principal;
 	private Vila vila;
 	private int comida;
 	private int ouro;
 	private int oferendasDeFe;
+	private AcaoPrefeitura acaoPrefeitura;
+	private String evoluirQual;
 	
 	//Construtores
 	public Prefeitura(Principal principal, Vila vila) {
 		this.principal = principal;
 		this.vila = vila;
-		this.comida = 0;
+		this.comida = 150;
+		this.ouro = 100;
+		this.oferendasDeFe = 0;
+		this.acaoPrefeitura = AcaoPrefeitura.PARADO;
 	}
 	
 	//Metodos
 	
+	public void run() {
+		
+		while(true) {
+			switch(acaoPrefeitura) {
+			case PARADO:
+				parar();
+				break;
+			case CRIANDO:
+				criarAldeao();
+				break;
+			case EVOLUINDO:
+				evoluir(this.evoluirQual);
+				break;
+			default:
+				break;
+			
+			}
+		}
+	}
 	
-	public void criarAldeao() {
+	public void setFuncaoPrefeitura(AcaoPrefeitura acao) {
+		this.acaoPrefeitura = acao;
+		synchronized (this) {
+			notify();
+		}
+	}
+	
+	
+	private void parar() {
+		synchronized (this) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	private void criarAldeao() {
 		 
 		if(this.vila.verificaEPaga(00, 0, 0)) {
+			
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			Aldeao novoAldeao = new Aldeao(this.vila,this.vila.gerarIdAldeao(), this.principal);
 			this.vila.addAldeoes(novoAldeao);
 			novoAldeao.start();
-			
+	
 			//System.out.println("Novo aldeao criado");
 			int numero = novoAldeao.getNumero();
 			String funcao = novoAldeao.getFuncao();
@@ -36,7 +88,8 @@ public class Prefeitura{
 			principal.mostrarAldeao(numero+1, "Sem funcao");
 		}else {
 			System.out.println("Não tem recurso suficiente");
-		}	
+		}
+		setFuncaoPrefeitura(AcaoPrefeitura.PARADO);
 	}
 	
 	
@@ -84,19 +137,21 @@ public class Prefeitura{
 	/************************* Evoluir *****************************/
 	
 	/****************************************************************/
+	/****************************************************************/
 	/************************* Trocar os preços *****************************/
 	/************************* Trocar tempo *****************************/
-	/************************* Começar com quantidade x de recursos *****************************/
-	/************************* Evoluções do templo e prefeitura*****************************/
-	/************************* Evoluir proteções *****************************/
-	/************************* Trocar as cores das funções *****************************/
+	/****************************************************************/
+	/****************************************************************/
+
 	
 	
 	
 	
+	public void qualEvoluir(String qual) {
+		this.evoluirQual = qual;
+	}
 	
-	
-	public void evoluir(String qual) {
+	private void evoluir(String qual) {
 		
 		if(qual.equals("Evolução de aldeão")) {
 			System.out.println("Evoluir aldeao");
@@ -109,60 +164,137 @@ public class Prefeitura{
 			System.out.println("Evoluir mina");
 			evoluirMina();
 		}
+		setFuncaoPrefeitura(AcaoPrefeitura.PARADO);
 	}
 	
 	private void evoluirAldeao() {
+		int precoComida = 0;
+		int precoOuro = 0;
+		int precoOferenda = 0;
 		
-		boolean podeEvoluir = false;
+		if(!podePagar(precoComida,precoOuro,precoOferenda)) {
+			System.out.println("não tem recurso suficiente");
+			return;
+		}
 		
 		/*Primeiro verifica se todos os aldeos já são evoluidos,
 		caso ja estejam evoluidos ele não paga de novo
 		*/
-		for (Aldeao aldeao : this.vila.getListaAldeos()) {
-			if(aldeao.getNivel() == 1) {
-				podeEvoluir = true;
+		
+		if(!verificaEvolucao("Evolução de aldeão")) {
+			return;
+		}
+		
+		try {
+			retirarComida(precoComida);
+			retirarOuro(precoOuro);
+			Thread.sleep(2000);
+			for (Aldeao aldeao : this.vila.getListaAldeos()) {
 				aldeao.evoluir();
-			}
 		}
-		if(podeEvoluir) {
-			//Colocar o pagamento
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		
 	}
 	
 	private void evoluirFazenda() {
+		int precoComida = 0;
+		int precoOuro = 0;
+		int precoOferenda = 0;
 		
-		boolean podeEvoluir = false;
-		
-		/*Primeiro verifica se todos os aldeos já são evoluidos,
-		caso ja estejam evoluidos ele não paga de novo
-		*/
-		for (Fazenda fazenda: this.vila.getListaFazendas()) {
-			if(fazenda.getNivel() == 1) {
-				podeEvoluir = true;
-				fazenda.evoluir();
-			}
+		if(!podePagar(precoComida,precoOuro,precoOferenda)) {
+			System.out.println("não tem recurso suficiente");
+			return;
 		}
-		if(podeEvoluir) {
-			//Colocar o pagamento
+		
+		if(!verificaEvolucao("Evolução de fazenda")) {
+			System.out.println("ja estao todos evoluidos");
+			return;
+		}
+		
+		try {
+			retirarComida(precoComida);
+			retirarOuro(precoOuro);
+			Thread.sleep(2000);
+			for (Fazenda fazenda: this.vila.getListaFazendas()) {
+				if(fazenda.getNivel() == 1) {
+					fazenda.evoluir();
+				}
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	private void evoluirMina() {
+		int precoComida = 0;
+		int precoOuro = 0;
+		int precoOferenda = 0;
 		
-		boolean podeEvoluir = false;
+		if(!podePagar(precoComida,precoOuro,precoOferenda)) {
+			System.out.println("não tem recurso suficiente");
+			return;
+		}
 		
-		/*Primeiro verifica se todos os aldeos já são evoluidos,
-		caso ja estejam evoluidos ele não paga de novo
-		*/
-		for (Mina mina: this.vila.getListaMinas()) {
-			if(mina.getNivel() == 1) {
-				podeEvoluir = true;
-				mina.evoluir();
+		if(!verificaEvolucao("Evolução de fazenda")) {
+			System.out.println("ja estao todos evoluidos");
+			return;
+		}
+		
+		try {
+			retirarComida(precoComida);
+			retirarOuro(precoOuro);
+			Thread.sleep(2000);
+			for (Mina mina: this.vila.getListaMinas()) {
+				if(mina.getNivel() == 1) {
+					mina.evoluir();
+				}
+			}
+		} catch (InterruptedException e) {
+		
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	private boolean podePagar(int comida, int ouro, int oferenda) {
+		if(this.getComida() >= comida && this.getOuro() >= ouro && this.getOferenda() >= oferenda) {
+			this.retirarComida(comida);
+			this.retirarOuro(ouro);
+			this.retirarOferenda(oferenda);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	private boolean verificaEvolucao(String qual) {
+		if(qual.equals("Evolução de aldeão")) {
+			System.out.println("Verifica Evoluir aldeao");
+			for (Aldeao aldeao : this.vila.getListaAldeos()) {
+				if(aldeao.getNivel() == 1) {
+					return true;
+				}
+			}
+		}else if(qual.equals("Evolução de fazenda")) {
+			System.out.println("Verifica Evoluir fazenda");
+			for (Fazenda fazenda : this.vila.getListaFazendas()) {
+				if(fazenda.getNivel() == 1) {
+					return true;
+				}
+			}
+		}else if(qual.equals("Evolução de mina de ouro")) {
+			System.out.println("Verifica Evoluir mina");
+			for (Mina mina : this.vila.getListaMinas()) {
+				if(mina.getIdMina() == 1) {
+					return true;
+				}
 			}
 		}
-		if(podeEvoluir) {
-			//Colocar o pagamento
-		}
+		return false;
 	}
 	
 }

@@ -22,7 +22,9 @@ public class Vila {
 	public Vila(Principal principal) {
 		this.principal = principal;
 		this.prefeitura = new Prefeitura(this.principal,this);
+		this.prefeitura.start();
 		this.maravilha = new Maravilha(this, this.principal);
+		
 	}
 	
 	//Metodos

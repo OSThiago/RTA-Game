@@ -37,6 +37,8 @@ import Classes.Maravilha;
 import Classes.Mina;
 import Classes.Vila;
 import Classes.AcaoAldeao;
+import Classes.AcaoPrefeitura;
+import Classes.AcaoTemplo;
 
 import java.awt.Toolkit;
 
@@ -88,6 +90,9 @@ public class Principal extends JFrame {
         this.vila = new Vila(this);
         
         //Inicio de jogo
+        mostrarComida(this.vila.getPrefeitura().getComida());
+        mostrarOuro(this.vila.getPrefeitura().getOuro());
+        
         
         //5 aldeoes
         for(int i = 0; i < 5; i++) {
@@ -144,7 +149,7 @@ public class Principal extends JFrame {
 					setBackground(Color.GREEN);
 				else if (v.contains("minerando"))
 					setBackground(Color.YELLOW);
-				else if (v.contains("construindo"))
+				else if (v.contains("construindo "))
 					setBackground(Color.LIGHT_GRAY);
 				else
 					setBackground(Color.WHITE);
@@ -638,6 +643,9 @@ public class Principal extends JFrame {
 		if (aldeao == -1)
 			mostrarMensagemErro("Erro", "Escolha um aldeão");
 		else {
+			
+			
+			
 			Aldeao aldeaoSelecionado = this.vila.getAldeao(aldeao);
 			aldeaoSelecionado.trocaFazenda(numeroFazenda);
 			aldeaoSelecionado.setFazenda(this.vila.getFazenda(numeroFazenda));
@@ -700,19 +708,21 @@ public class Principal extends JFrame {
 	
 	public void comandoPrefeituraCriarAldeao() {
 		
-		this.vila.getPrefeitura().criarAldeao();
+		this.vila.getPrefeitura().setFuncaoPrefeitura(AcaoPrefeitura.CRIANDO);
 		//System.out.println("comandoPrefeituraCriarAldeao();");
 	}
 
 	public void comandoPrefeituraEvoluir(String strEvolucao) {
-		this.vila.getPrefeitura().evoluir(strEvolucao);
+		this.vila.getPrefeitura().qualEvoluir(strEvolucao);
+		this.vila.getPrefeitura().setFuncaoPrefeitura(AcaoPrefeitura.EVOLUINDO);
 		//System.out.println("comandoPrefeituraEvoluir(strEvolucao);");
 	}
 
 	public void comandoTemploEvoluir(String strEvolucao) {
 		System.out.println("comandoTemploEvoluir(strEvolucao);");
 		System.out.println(strEvolucao);
-		this.vila.getTemplo().escolheEvolucao(strEvolucao);
+		this.vila.getTemplo().setQualEvolucao(strEvolucao);
+		this.vila.getTemplo().setAcaoTemplo(AcaoTemplo.EVOLUINDO);
 	}
 	
 	public void comandoTemploLancar() {
